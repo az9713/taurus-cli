@@ -209,13 +209,10 @@ program
     }
   });
 
-// Import chalk dynamically for init command
-async function importChalk() {
-  const chalkModule = await import('chalk');
-  return chalkModule.default;
-}
+import chalk from 'chalk';
 
-let chalk: any;
-importChalk().then((c) => (chalk = c));
+// ... (rest of imports)
+
+// ... (program setup)
 
 program.parse();

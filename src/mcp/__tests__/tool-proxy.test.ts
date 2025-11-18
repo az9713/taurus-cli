@@ -3,7 +3,7 @@
  */
 
 import { McpToolProxy } from '../tool-proxy.js';
-import { McpTool, McpServer } from '../types.js';
+import { McpTool } from '../types.js';
 
 // Mock MCP Server
 class MockMcpServer {
@@ -11,8 +11,8 @@ class MockMcpServer {
   state = 'connected' as const;
   info = null;
 
-  async connect() {}
-  async disconnect() {}
+  async connect() { }
+  async disconnect() { }
   async listTools() {
     return [];
   }

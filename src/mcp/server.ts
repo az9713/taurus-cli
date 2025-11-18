@@ -27,7 +27,7 @@ export class McpServer implements IMcpServer {
   private _state: ConnectionState = 'disconnected';
   private _info: McpServerInfo | null = null;
 
-  constructor(private config: McpServerConfig) {}
+  constructor(private config: McpServerConfig) { }
 
   get name(): string {
     return this.config.name;
@@ -71,6 +71,12 @@ export class McpServer implements IMcpServer {
       } else {
         throw new Error(`Unsupported transport: ${this.config.transport}`);
       }
+
+      // Handle transport errors
+      this.transport.on('error', (error) => {
+        logger.error(`Transport error for ${this.name}: ${error.message}`);
+        this.disconnect().catch(() => { });
+      });
 
       // Connect transport
       await this.transport.connect();

@@ -7,14 +7,10 @@ import { McpTransport } from '../transport.js';
 // Mock transport implementation for testing
 class MockTransport extends McpTransport {
   public sentMessages: any[] = [];
-  private mockConnected = false;
-
   async connect(): Promise<void> {
-    this.mockConnected = true;
   }
 
   async disconnect(): Promise<void> {
-    this.mockConnected = false;
   }
 
   async send(message: any): Promise<void> {
