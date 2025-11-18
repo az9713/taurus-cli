@@ -11,23 +11,49 @@ import { Message, ContentBlock, ToolUseBlock, ToolResultBlock } from '../types/i
 import { logger } from '../utils/logger.js';
 import chalk from 'chalk';
 
+// Optional new feature imports
+import type { ProviderManager } from '../providers/manager.js';
+import type { IntegrationManager } from '../integrations/manager.js';
+import type { SnapshotManager } from '../replay/snapshot-manager.js';
+import type { SchedulerManager } from '../scheduler/scheduler-manager.js';
+
 export class AgentOrchestrator {
   private claudeClient: ClaudeClient;
   private toolRegistry: ToolRegistry;
   private sessionManager: SessionManager;
   private hooksManager: HooksManager;
+  private configManager: ConfigManager;
+
+  // Optional new features
+  private providerManager?: ProviderManager;
+  private integrationManager?: IntegrationManager;
+  private snapshotManager?: SnapshotManager;
+  private schedulerManager?: SchedulerManager;
 
   constructor(
     claudeClient: ClaudeClient,
     toolRegistry: ToolRegistry,
     sessionManager: SessionManager,
     hooksManager: HooksManager,
-    _configManager: ConfigManager
+    configManager: ConfigManager,
+    options?: {
+      providerManager?: ProviderManager;
+      integrationManager?: IntegrationManager;
+      snapshotManager?: SnapshotManager;
+      schedulerManager?: SchedulerManager;
+    }
   ) {
     this.claudeClient = claudeClient;
     this.toolRegistry = toolRegistry;
     this.sessionManager = sessionManager;
     this.hooksManager = hooksManager;
+    this.configManager = configManager;
+
+    // Set optional features
+    this.providerManager = options?.providerManager;
+    this.integrationManager = options?.integrationManager;
+    this.snapshotManager = options?.snapshotManager;
+    this.schedulerManager = options?.schedulerManager;
   }
 
   async processUserMessage(userInput: string): Promise<void> {
@@ -36,15 +62,48 @@ export class AgentOrchestrator {
       input: userInput,
     });
 
+    // Auto-fetch context from integrations if enabled
+    let enhancedInput = userInput;
+    if (this.integrationManager) {
+      try {
+        const context = await this.integrationManager.autoFetchContext(userInput);
+        if (context.length > 0) {
+          const contextText = this.integrationManager.formatContextForPrompt(context);
+          enhancedInput = `${userInput}\n\n${contextText}`;
+          logger.info(`${chalk.cyan('🔗')} Auto-fetched context from ${context.length} integration(s)`);
+        }
+      } catch (error: any) {
+        logger.debug(`Context fetching failed: ${error.message}`);
+      }
+    }
+
     // Add user message to session
     const userMessage: Message = {
       role: 'user',
-      content: userInput,
+      content: enhancedInput,
     };
     this.sessionManager.addMessage(userMessage);
 
+    // Create snapshot before processing if replay is enabled
+    if (this.snapshotManager) {
+      try {
+        this.snapshotManager.createSnapshot('message', 'User message received', { input: userInput });
+      } catch (error: any) {
+        logger.debug(`Snapshot creation failed: ${error.message}`);
+      }
+    }
+
     // Process the conversation
     await this.processConversation();
+
+    // Create snapshot after processing if replay is enabled
+    if (this.snapshotManager) {
+      try {
+        this.snapshotManager.createSnapshot('message', 'Message processing complete', {});
+      } catch (error: any) {
+        logger.debug(`Snapshot creation failed: ${error.message}`);
+      }
+    }
 
     // Save session
     await this.sessionManager.saveSession();
@@ -163,9 +222,49 @@ export class AgentOrchestrator {
     await this.hooksManager.trigger('session-start', {
       sessionId: this.sessionManager.getCurrentSession()?.id,
     });
+
+    // Start scheduler if enabled
+    if (this.schedulerManager) {
+      try {
+        this.schedulerManager.start();
+        logger.info(`${chalk.cyan('⏰')} Scheduler started`);
+      } catch (error: any) {
+        logger.debug(`Scheduler start failed: ${error.message}`);
+      }
+    }
+
+    // Start auto-snapshot if replay is enabled
+    if (this.snapshotManager) {
+      try {
+        this.snapshotManager.startAutoSnapshot();
+        logger.debug('Auto-snapshot enabled');
+      } catch (error: any) {
+        logger.debug(`Auto-snapshot start failed: ${error.message}`);
+      }
+    }
   }
 
   async shutdown(): Promise<void> {
+    // Stop scheduler if enabled
+    if (this.schedulerManager) {
+      try {
+        this.schedulerManager.stop();
+        logger.debug('Scheduler stopped');
+      } catch (error: any) {
+        logger.debug(`Scheduler stop failed: ${error.message}`);
+      }
+    }
+
+    // Stop auto-snapshot if replay is enabled
+    if (this.snapshotManager) {
+      try {
+        this.snapshotManager.stopAutoSnapshot();
+        logger.debug('Auto-snapshot stopped');
+      } catch (error: any) {
+        logger.debug(`Auto-snapshot stop failed: ${error.message}`);
+      }
+    }
+
     // Trigger session-end hook
     await this.hooksManager.trigger('session-end', {
       sessionId: this.sessionManager.getCurrentSession()?.id,

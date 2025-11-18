@@ -64,6 +64,69 @@ export interface Config {
   sessionDirectory: string;
   hooksEnabled: boolean;
   mcpServers: McpServerConfig[];
+
+  // Multi-Model Provider Support
+  providers?: {
+    anthropic?: {
+      apiKey: string;
+      models: string[];
+    };
+    openai?: {
+      apiKey: string;
+      models: string[];
+    };
+    ollama?: {
+      baseUrl: string;
+      models: string[];
+    };
+  };
+
+  // Collaborative Sessions
+  collaboration?: {
+    enabled: boolean;
+    serverPort?: number;
+    serverHost?: string;
+  };
+
+  // Context-Aware Integrations
+  integrations?: {
+    jira?: {
+      url: string;
+      email: string;
+      apiToken: string;
+    };
+    github?: {
+      token: string;
+    };
+    slack?: {
+      token: string;
+      lookbackDays?: number;
+    };
+    confluence?: {
+      url: string;
+      email: string;
+      apiToken: string;
+    };
+  };
+
+  // Time-Travel Replay
+  replay?: {
+    enabled: boolean;
+    snapshotInterval?: number;
+    maxSnapshots?: number;
+  };
+
+  // AI-Powered Scheduler
+  scheduler?: {
+    enabled: boolean;
+    tasks?: Array<{
+      name: string;
+      description: string;
+      schedule: string;
+      type: string;
+      enabled: boolean;
+    }>;
+  };
 }
 
 export interface Session {

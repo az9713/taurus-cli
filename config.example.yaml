@@ -1,0 +1,292 @@
+# Taurus CLI Configuration Example
+# Copy this to ~/.taurus/config.yaml and customize for your needs
+
+# Core Settings
+model: claude-sonnet-4-5-20250929
+maxTokens: 8096
+temperature: 1.0
+apiKey: ${ANTHROPIC_API_KEY}  # Or set directly
+workingDirectory: ./
+hooksEnabled: true
+
+# ============================================================================
+# FEATURE 1: Multi-Model AI Provider Support
+# ============================================================================
+# Configure multiple AI providers and automatic routing
+
+providers:
+  # Anthropic Claude (default)
+  anthropic:
+    apiKey: ${ANTHROPIC_API_KEY}
+    models:
+      - claude-sonnet-4-5-20250929
+      - claude-opus-4-20250514
+      - claude-haiku-4-20250514
+
+  # OpenAI GPT
+  openai:
+    apiKey: ${OPENAI_API_KEY}
+    models:
+      - gpt-4-turbo
+      - gpt-4
+      - gpt-3.5-turbo
+
+  # Ollama (local models)
+  ollama:
+    baseUrl: http://localhost:11434
+    models:
+      - llama2
+      - codellama
+      - mistral
+
+# Provider routing rules (optional)
+providerRouting:
+  defaultProvider: anthropic
+  defaultModel: claude-sonnet-4-5-20250929
+
+  # Automatic routing based on task patterns
+  rules:
+    - pattern: "quick|fast|simple"
+      provider: anthropic
+      model: claude-haiku-4-20250514
+
+    - pattern: "complex|detailed|comprehensive"
+      provider: anthropic
+      model: claude-opus-4-20250514
+
+    - pattern: "code review|refactor"
+      provider: openai
+      model: gpt-4-turbo
+
+    - pattern: "local|offline|private"
+      provider: ollama
+      model: codellama
+
+# ============================================================================
+# FEATURE 2: Collaborative Sessions
+# ============================================================================
+# Enable real-time collaboration with other users
+
+collaboration:
+  enabled: false
+  serverPort: 8080
+  serverHost: localhost
+
+  # When enabled, you can share sessions with:
+  # - Multiple users editing simultaneously
+  # - Real-time cursor positions
+  # - User roles (admin, editor, viewer)
+  # - Session recording
+
+# ============================================================================
+# FEATURE 3: Context-Aware Integrations Hub
+# ============================================================================
+# Automatically fetch context from external services
+
+integrations:
+  # Jira integration
+  jira:
+    url: https://your-company.atlassian.net
+    email: your-email@company.com
+    apiToken: ${JIRA_API_TOKEN}
+
+    # Auto-fetches context when you mention:
+    # - JIRA-1234 (ticket numbers)
+    # - Includes ticket details, comments, linked issues
+
+  # GitHub integration
+  github:
+    token: ${GITHUB_TOKEN}
+
+    # Auto-fetches context when you mention:
+    # - #123 (issue numbers)
+    # - owner/repo#123 (specific repo issues)
+    # - Includes issue details, comments, PRs
+
+  # Slack integration
+  slack:
+    token: ${SLACK_TOKEN}
+    lookbackDays: 7
+
+    # Auto-fetches context from:
+    # - Recent channel messages
+    # - Thread discussions
+    # - Search results
+
+  # Confluence integration
+  confluence:
+    url: https://your-company.atlassian.net/wiki
+    email: your-email@company.com
+    apiToken: ${CONFLUENCE_API_TOKEN}
+
+    # Auto-fetches context when you mention:
+    # - Page IDs
+    # - Documentation links
+    # - Search terms
+
+# Context fetching rules (optional)
+contextRules:
+  - trigger: "bug|issue"
+    actions:
+      - fetchRelatedSlackMessages
+      - fetchRelatedConfluenceDocs
+    priority: high
+
+  - trigger: "deploy|release"
+    actions:
+      - fetchRelatedSlackMessages
+    priority: medium
+
+# ============================================================================
+# FEATURE 4: Time-Travel Session Replay
+# ============================================================================
+# Record and replay sessions with file state snapshots
+
+replay:
+  enabled: true
+  snapshotInterval: 300000  # 5 minutes
+  maxSnapshots: 100
+
+  # Enables:
+  # - Automatic snapshots before/after changes
+  # - Restore to any point in time
+  # - View diffs between snapshots
+  # - Export session timeline
+  # - Video replay generation
+
+# ============================================================================
+# FEATURE 5: AI-Powered Cron Jobs (Scheduler)
+# ============================================================================
+# Schedule automated AI-powered tasks
+
+scheduler:
+  enabled: false
+
+  tasks:
+    # Daily security audit
+    - name: security-audit
+      description: Daily security vulnerability scan
+      schedule: "0 9 * * *"  # Every day at 9 AM
+      type: security-audit
+      enabled: true
+      action: create-github-issue
+      notifications:
+        slack: true
+        email: true
+
+      config:
+        scanPaths:
+          - src/
+          - lib/
+        excludePatterns:
+          - "*.test.ts"
+          - "node_modules"
+
+    # Test coverage check
+    - name: coverage-check
+      description: Weekly test coverage analysis
+      schedule: "0 */6 * * *"  # Every 6 hours
+      type: test-coverage
+      enabled: true
+      action: create-pr
+
+      config:
+        minimumCoverage: 80
+        reportFormat: lcov
+        failOnDecrease: true
+
+    # Dependency updates
+    - name: dependency-update
+      description: Weekly dependency security check
+      schedule: "0 9 * * MON"  # Every Monday at 9 AM
+      type: dependency-update
+      enabled: true
+      action: create-pr
+
+      config:
+        checkSecurity: true
+        autoUpdatePatch: true
+        groupUpdates: true
+
+    # Performance monitoring
+    - name: performance-audit
+      description: Daily performance benchmarks
+      schedule: "0 2 * * *"  # Every day at 2 AM
+      type: performance-audit
+      enabled: false
+      action: notify
+
+      config:
+        benchmarkSuites:
+          - api-response-times
+          - database-queries
+          - memory-usage
+        thresholds:
+          maxResponseTime: 200
+          maxMemoryMb: 512
+
+# ============================================================================
+# MCP (Model Context Protocol) Servers
+# ============================================================================
+# Configure MCP servers for extended functionality
+
+mcpServers:
+  - name: filesystem
+    command: npx
+    args:
+      - -y
+      - "@modelcontextprotocol/server-filesystem"
+      - /path/to/allowed/directory
+    enabled: true
+
+  - name: github
+    command: npx
+    args:
+      - -y
+      - "@modelcontextprotocol/server-github"
+    env:
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+    enabled: true
+
+# ============================================================================
+# Hooks Configuration
+# ============================================================================
+# See .taurus/hooks.yaml for hook definitions
+
+# ============================================================================
+# Usage Examples
+# ============================================================================
+
+# Example 1: Use specific provider
+# User: "Using OpenAI, write a function to sort an array"
+# → Taurus uses gpt-4-turbo instead of Claude
+
+# Example 2: Auto-fetch Jira context
+# User: "Fix the bug in JIRA-1234"
+# → Taurus automatically fetches ticket details, comments, and linked issues
+
+# Example 3: Collaborative session
+# User: "Start a collaborative session"
+# → Other users can join and edit together in real-time
+
+# Example 4: Time-travel replay
+# User: "Restore to 30 minutes ago"
+# → Taurus restores file states and conversation to that point
+
+# Example 5: Scheduled tasks
+# → Security audit runs daily at 9 AM
+# → Creates GitHub issues for vulnerabilities found
+
+# ============================================================================
+# Environment Variables
+# ============================================================================
+
+# Required:
+# export ANTHROPIC_API_KEY=sk-ant-...
+
+# Optional (for features):
+# export OPENAI_API_KEY=sk-...
+# export JIRA_API_TOKEN=...
+# export GITHUB_TOKEN=ghp_...
+# export SLACK_TOKEN=xoxb-...
+# export CONFLUENCE_API_TOKEN=...
