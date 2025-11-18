@@ -1,0 +1,34 @@
+# Example Taurus CLI Configuration
+# Copy this to ~/.taurus/config.yaml or .taurus/config.yaml
+
+# Claude API Settings
+model: claude-sonnet-4-5-20250929
+maxTokens: 8096
+temperature: 1.0
+
+# Directories
+workingDirectory: .
+sessionDirectory: ~/.taurus/sessions
+
+# Features
+hooksEnabled: true
+
+# MCP Servers (Model Context Protocol)
+# Uncomment and configure as needed
+# mcpServers:
+#   - name: filesystem
+#     command: npx
+#     args:
+#       - -y
+#       - @modelcontextprotocol/server-filesystem
+#       - /path/to/allowed/directory
+#     env:
+#       NODE_ENV: production
+#
+#   - name: github
+#     command: npx
+#     args:
+#       - -y
+#       - @modelcontextprotocol/server-github
+#     env:
+#       GITHUB_TOKEN: your_token_here

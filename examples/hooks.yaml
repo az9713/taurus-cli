@@ -1,0 +1,60 @@
+# Example Hooks Configuration
+# Copy this to ~/.taurus/hooks.yaml or .taurus/hooks.yaml
+
+hooks:
+  # Session lifecycle hooks
+  - name: session-start
+    event: session-start
+    command: |
+      echo "🐂 Taurus session started at $(date)"
+      echo "Session ID: $TAURUS_SESSION_ID"
+    enabled: true
+
+  - name: session-end
+    event: session-end
+    command: |
+      echo "👋 Session ended at $(date)"
+    enabled: true
+
+  # User interaction hooks
+  - name: log-user-input
+    event: user-prompt-submit
+    command: |
+      echo "[$(date)] User input: $TAURUS_INPUT" >> ~/.taurus/input.log
+    enabled: false
+
+  # Tool execution hooks
+  - name: git-safety-check
+    event: before-tool-call
+    command: |
+      if [[ "$TAURUS_TOOL" == "Bash" ]]; then
+        if echo "$TAURUS_COMMAND" | grep -q "git push --force"; then
+          echo "⚠️  WARNING: Force push detected!"
+        fi
+      fi
+    enabled: true
+
+  - name: track-tool-usage
+    event: after-tool-call
+    command: |
+      echo "[$(date)] Tool used: $TAURUS_TOOL (Success: $TAURUS_SUCCESS)" >> ~/.taurus/tools.log
+    enabled: false
+
+  # Project-specific hooks
+  - name: npm-audit
+    event: session-start
+    command: |
+      if [ -f "package.json" ]; then
+        echo "Running npm audit..."
+        npm audit --audit-level=high
+      fi
+    enabled: false
+
+  - name: git-status
+    event: session-start
+    command: |
+      if [ -d ".git" ]; then
+        echo "Git status:"
+        git status --short
+      fi
+    enabled: true
