@@ -1,0 +1,102 @@
+# Complete MCP Configuration Examples for Taurus CLI
+
+# Basic configuration with MCP servers
+model: claude-sonnet-4-5-20250929
+maxTokens: 8096
+temperature: 1.0
+hooksEnabled: true
+
+# MCP Server Configurations
+mcpServers:
+  # Example 1: Local Filesystem Access
+  - name: filesystem
+    transport: stdio
+    command: npx
+    args:
+      - -y
+      - @modelcontextprotocol/server-filesystem
+      - ~/Documents  # Only access Documents folder
+    env:
+      LOG_LEVEL: info
+
+  # Example 2: GitHub Integration
+  - name: github
+    transport: stdio
+    command: npx
+    args:
+      - -y
+      - @modelcontextprotocol/server-github
+    env:
+      GITHUB_TOKEN: ghp_your_github_token_here
+      GITHUB_OWNER: your-username  # Optional: default owner for repos
+
+  # Example 3: PostgreSQL Database
+  - name: postgres
+    transport: stdio
+    command: npx
+    args:
+      - -y
+      - @modelcontextprotocol/server-postgres
+    env:
+      DATABASE_URL: postgresql://user:password@localhost:5432/mydb
+
+  # Example 4: SQLite Database
+  - name: sqlite
+    transport: stdio
+    command: npx
+    args:
+      - -y
+      - @modelcontextprotocol/server-sqlite
+      - /path/to/database.db
+
+  # Example 5: Web Search (Brave)
+  - name: brave-search
+    transport: stdio
+    command: npx
+    args:
+      - -y
+      - @modelcontextprotocol/server-brave-search
+    env:
+      BRAVE_API_KEY: your_brave_api_key_here
+
+  # Example 6: Custom Local MCP Server
+  - name: my-tools
+    transport: stdio
+    command: node
+    args:
+      - /path/to/my-mcp-server.js
+    env:
+      DEBUG: "true"
+      CUSTOM_CONFIG: /path/to/config.json
+
+  # Example 7: Remote HTTP MCP Server
+  - name: company-api
+    transport: http
+    url: https://mcp.company.com
+    headers:
+      Authorization: Bearer your_api_token_here
+      X-Company-Id: "12345"
+
+  # Example 8: Multiple Filesystem Servers (Different Scopes)
+  - name: projects
+    transport: stdio
+    command: npx
+    args:
+      - -y
+      - @modelcontextprotocol/server-filesystem
+      - ~/projects
+
+  - name: work
+    transport: stdio
+    command: npx
+    args:
+      - -y
+      - @modelcontextprotocol/server-filesystem
+      - /work/repositories
+
+# Notes:
+# 1. Replace placeholder tokens/keys with your actual credentials
+# 2. Use environment variables for sensitive data: ${ENV_VAR_NAME}
+# 3. Server names must be unique
+# 4. Tools from servers are named: {server-name}__{tool-name}
+# 5. Servers are connected on startup and disconnected on shutdown

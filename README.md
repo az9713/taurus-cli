@@ -1,6 +1,6 @@
 # 🐂 Taurus CLI
 
-A complete Claude Code clone with subagents, skills, slash commands, hooks, and all features present in Claude Code.
+A complete Claude Code clone with subagents, skills, slash commands, hooks, full MCP integration, and all features present in Claude Code.
 
 ## Features
 
@@ -54,6 +54,17 @@ Usage: Execute via Skill tool
 - Automatic conversation history saving
 - Resume previous sessions
 - Session management commands
+
+### 🔌 MCP (Model Context Protocol) Integration
+Full support for MCP servers to dynamically extend capabilities:
+- **Stdio Transport** - Connect to local MCP servers via stdin/stdout
+- **HTTP/SSE Transport** - Connect to remote MCP servers via HTTP with Server-Sent Events
+- **Dynamic Tool Loading** - Tools from MCP servers automatically become available
+- **Resource Access** - Read files, databases, and other resources through MCP
+- **Prompt Templates** - Use predefined prompts from MCP servers
+- **Multiple Servers** - Connect to multiple MCP servers simultaneously
+
+See [MCP.md](./MCP.md) for complete documentation.
 
 ### ⚙️ Configuration
 Flexible configuration via YAML files:

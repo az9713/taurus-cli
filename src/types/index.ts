@@ -2,6 +2,14 @@
  * Core type definitions for Taurus CLI
  */
 
+import type { McpServerConfig as ImportedMcpServerConfig } from '../mcp/types.js';
+
+// Re-export MCP types
+export type { McpServerConfig } from '../mcp/types.js';
+
+// Local type alias for use in this file
+type McpServerConfig = ImportedMcpServerConfig;
+
 export interface Message {
   role: 'user' | 'assistant';
   content: string | ContentBlock[];
@@ -55,14 +63,7 @@ export interface Config {
   workingDirectory: string;
   sessionDirectory: string;
   hooksEnabled: boolean;
-  mcpServers: MCPServerConfig[];
-}
-
-export interface MCPServerConfig {
-  name: string;
-  command: string;
-  args: string[];
-  env?: Record<string, string>;
+  mcpServers: McpServerConfig[];
 }
 
 export interface Session {

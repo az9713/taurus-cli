@@ -13,6 +13,7 @@ import { ClaudeClient } from './api/claude.js';
 import { createToolRegistry } from './tools/index.js';
 import { AgentOrchestrator } from './agent/orchestrator.js';
 import { REPL } from './cli/repl.js';
+import { McpManager } from './mcp/manager.js';
 import { logger } from './utils/logger.js';
 import { join } from 'path';
 import { homedir } from 'os';
@@ -72,6 +73,10 @@ program
       // Initialize tool registry
       const toolRegistry = createToolRegistry();
 
+      // Initialize MCP servers
+      const mcpManager = new McpManager(config.mcpServers, toolRegistry);
+      await mcpManager.initialize();
+
       // Create orchestrator
       const orchestrator = new AgentOrchestrator(
         claudeClient,
@@ -84,6 +89,12 @@ program
       // Start REPL
       const repl = new REPL(orchestrator);
       await repl.start();
+
+      // Cleanup on exit
+      process.on('SIGINT', async () => {
+        await mcpManager.shutdown();
+        process.exit(0);
+      });
     } catch (error: any) {
       logger.error(`Failed to start: ${error.message}`);
       process.exit(1);
