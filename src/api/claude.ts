@@ -85,4 +85,27 @@ export class ClaudeClient {
       throw error;
     }
   }
+
+  /**
+   * Generate text without tools (for simple text generation)
+   */
+  async generateText(prompt: string): Promise<string> {
+    try {
+      const messages: Message[] = [
+        {
+          role: 'user',
+          content: prompt,
+        },
+      ];
+
+      const response = await this.sendMessage(messages, []);
+
+      // Extract text from response
+      const textContent = response.content.find((block: any) => block.type === 'text') as any;
+      return textContent ? textContent.text : '';
+    } catch (error: any) {
+      logger.error(`Text generation error: ${error.message}`);
+      throw error;
+    }
+  }
 }

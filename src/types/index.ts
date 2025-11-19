@@ -64,6 +64,189 @@ export interface Config {
   sessionDirectory: string;
   hooksEnabled: boolean;
   mcpServers: McpServerConfig[];
+
+  // Multi-Model Provider Support
+  providers?: {
+    anthropic?: {
+      apiKey: string;
+      models: string[];
+    };
+    openai?: {
+      apiKey: string;
+      models: string[];
+    };
+    ollama?: {
+      baseUrl: string;
+      models: string[];
+    };
+  };
+
+  // Collaborative Sessions
+  collaboration?: {
+    enabled: boolean;
+    serverPort?: number;
+    serverHost?: string;
+  };
+
+  // Context-Aware Integrations
+  integrations?: {
+    jira?: {
+      url: string;
+      email: string;
+      apiToken: string;
+    };
+    github?: {
+      token: string;
+    };
+    slack?: {
+      token: string;
+      lookbackDays?: number;
+    };
+    confluence?: {
+      url: string;
+      email: string;
+      apiToken: string;
+    };
+  };
+
+  // Time-Travel Replay
+  replay?: {
+    enabled: boolean;
+    snapshotInterval?: number;
+    maxSnapshots?: number;
+  };
+
+  // AI-Powered Scheduler
+  scheduler?: {
+    enabled: boolean;
+    tasks?: Array<{
+      name: string;
+      description: string;
+      schedule: string;
+      type: string;
+      enabled: boolean;
+    }>;
+  };
+
+  // Phase 1 Features
+
+  // Feature 6: AI Code Review Bot
+  codeReview?: {
+    enabled: boolean;
+    autoReview: boolean;
+    reviewOn: Array<'pull_request' | 'commit' | 'save'>;
+    checks: Array<'style' | 'security' | 'performance' | 'testing' | 'documentation' | 'best-practices'>;
+    severity: {
+      blockOnCritical: boolean;
+      blockOnHigh: boolean;
+      warnOnMedium: boolean;
+    };
+    excludePatterns?: string[];
+    includePatterns?: string[];
+  };
+
+  // Feature 8: Intelligent Dependency Manager
+  dependencyManager?: {
+    enabled: boolean;
+    packageManager: 'npm' | 'yarn' | 'pnpm';
+    autoUpdate: {
+      security: 'immediately' | 'daily' | 'weekly' | 'monthly' | 'manual';
+      patch: 'immediately' | 'daily' | 'weekly' | 'monthly' | 'manual';
+      minor: 'immediately' | 'daily' | 'weekly' | 'monthly' | 'manual';
+      major: 'immediately' | 'daily' | 'weekly' | 'monthly' | 'manual';
+    };
+    policies: {
+      allowedLicenses: string[];
+      blockedLicenses: string[];
+      blockedPackages: string[];
+    };
+    optimization: {
+      bundleSizeLimit?: number;
+      suggestAlternatives: boolean;
+      detectUnused: boolean;
+    };
+  };
+
+  // Feature 15: Automated Documentation Writer
+  documentation?: {
+    enabled: boolean;
+    output: string;
+    formats: Array<'markdown' | 'html' | 'pdf' | 'json'>;
+    features: {
+      apiReference: boolean;
+      tutorials: boolean;
+      examples: boolean;
+      diagrams: boolean;
+      changelog: boolean;
+    };
+  };
+
+  // Phase 2 Features
+
+  // Feature 2: Smart Code Generation from Specs
+  codeGeneration?: {
+    enabled: boolean;
+    defaultLanguage: 'typescript' | 'javascript' | 'python' | 'java' | 'go' | 'rust';
+    quality: 'fast' | 'balanced' | 'thorough';
+    templates: {
+      enabled: boolean;
+      customTemplatesPath?: string;
+    };
+    validation: {
+      syntaxCheck: boolean;
+      linting: boolean;
+      typeChecking: boolean;
+    };
+    testing: {
+      generateTests: boolean;
+      testFramework: string;
+      coverageTarget: number;
+    };
+    documentation: {
+      generateDocs: boolean;
+      docStyle: 'jsdoc' | 'sphinx' | 'javadoc' | 'godoc' | 'inline';
+    };
+  };
+
+  // Feature 4: Local Development Environment Orchestrator
+  devEnvironment?: {
+    enabled: boolean;
+    projectName: string;
+    services: Array<{
+      name: string;
+      type: 'database' | 'cache' | 'message-queue' | 'search' | 'storage' | 'api' | 'web' | 'worker' | 'custom';
+      image?: string;
+      ports?: Array<{ host: number; container: number }>;
+      environment?: Record<string, string>;
+      volumes?: string[];
+      depends_on?: string[];
+    }>;
+    autoStart: boolean;
+    healthCheck: {
+      enabled: boolean;
+      interval: number;
+      timeout: number;
+      retries: number;
+    };
+  };
+
+  // Feature 5: AI Knowledge Base from Codebase
+  knowledgeBase?: {
+    enabled: boolean;
+    indexPath: string;
+    embeddingProvider: 'anthropic' | 'openai' | 'local';
+    chunkSize: number;
+    chunkOverlap: number;
+    maxResults: number;
+    similarityThreshold: number;
+    indexing: {
+      includePatterns: string[];
+      excludePatterns: string[];
+      languages: string[];
+      parseComments: boolean;
+      parseDocstrings: boolean;
+    };
+  };
 }
 
 export interface Session {
