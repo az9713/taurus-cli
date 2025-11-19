@@ -5,6 +5,7 @@ Comprehensive tutorials for mastering Taurus CLI - a complete Claude Code clone 
 ## 📚 Tutorial Index
 
 ### Getting Started
+0. **[Absolute Beginner's Guide](./00-absolute-beginner-guide.md)** - Complete guide for users with no technical background (START HERE if you're new to CLI tools)
 1. **[Installation Guide](./01-installation.md)** - Complete setup and configuration
 2. **[Quick Start Guide](./02-quickstart.md)** - Your first session with Taurus
 
@@ -31,6 +32,9 @@ Comprehensive tutorials for mastering Taurus CLI - a complete Claude Code clone 
 
 ## 🎯 Learning Path
 
+### Absolute Beginner (No CLI Experience)
+0. Absolute Beginner's Guide - Complete 15-minute walkthrough
+
 ### Beginner (Start Here)
 1. Installation Guide
 2. Quick Start Guide
@@ -53,11 +57,11 @@ Comprehensive tutorials for mastering Taurus CLI - a complete Claude Code clone 
 
 ## 🛠️ Prerequisites
 
-- **Node.js** 18.0.0 or higher
-- **npm** 9.0.0 or higher
-- **Git** (for project workflows)
+- **Node.js** 18.0.0 or higher (installation covered in tutorials)
+- **npm** 9.0.0 or higher (comes with Node.js)
+- **Git** (for project workflows, optional for beginners)
 - **Anthropic API Key** (get from https://console.anthropic.com)
-- **Basic terminal/command line knowledge**
+- **No prior CLI experience needed!** Start with the [Absolute Beginner's Guide](./00-absolute-beginner-guide.md)
 
 ## 💡 Tutorial Features
 
@@ -70,6 +74,8 @@ Each tutorial includes:
 - ✅ Common pitfalls to avoid
 
 ## 🚀 Quick Navigation
+
+**Never used a CLI tool before?** Start with [Absolute Beginner's Guide](./00-absolute-beginner-guide.md)
 
 **New to Taurus?** Start with [Installation Guide](./01-installation.md)
 
@@ -101,4 +107,6 @@ Each tutorial includes:
 
 ---
 
-**Let's get started! Head to the [Installation Guide](./01-installation.md) →**
+**Let's get started!**
+- **Never used CLI tools?** → [Absolute Beginner's Guide](./00-absolute-beginner-guide.md)
+- **Have some CLI experience?** → [Installation Guide](./01-installation.md)
