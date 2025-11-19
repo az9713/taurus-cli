@@ -501,6 +501,18 @@ Contributions are welcome! Please:
 
 MIT License - see LICENSE file for details
 
+## Comparison with Claude Code
+
+Wondering how Taurus CLI compares to the official Claude Code? See our comprehensive comparison:
+
+**[Claude Code vs Taurus CLI Comparison](./CLAUDE_CODE_COMPARISON.md)**
+
+**TL;DR:**
+- **Claude Code:** Official product with web/mobile access, enterprise support, $20/month
+- **Taurus CLI:** Open source with test generation, security scanning, database tools, no subscription
+
+Both tools are compatible and can use the same MCP servers, hooks, and skills.
+
 ## Acknowledgments
 
 - Inspired by Claude Code from Anthropic
