@@ -203,7 +203,28 @@ export class TaurusSecurityScannerManager
     this.emit('audit:started');
 
     const checks = this.performBestPracticeChecks();
-    const issues = await this.scanFile('.');
+
+    // Scan actual project files instead of trying to read '.' as a file
+    const issues: Vulnerability[] = [];
+    const sourcePatterns = ['src/**/*.ts', 'src/**/*.js', 'lib/**/*.ts', 'lib/**/*.js'];
+
+    // Use glob to find source files
+    const glob = require('glob');
+    for (const pattern of sourcePatterns) {
+      try {
+        const files = glob.sync(pattern, {
+          ignore: this.config.staticAnalysis.excludePatterns || ['node_modules/**', 'dist/**']
+        });
+
+        for (const file of files) {
+          const fileVulns = await this.scanFile(file);
+          issues.push(...fileVulns);
+        }
+      } catch (error) {
+        // Pattern might not match any files, continue
+      }
+    }
+
     const recommendations = this.generateRecommendations(issues, [], []);
 
     const passedChecks = checks.filter((c) => c.passed).length;
