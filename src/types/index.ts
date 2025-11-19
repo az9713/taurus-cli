@@ -247,6 +247,74 @@ export interface Config {
       parseDocstrings: boolean;
     };
   };
+
+  // Phase 3 Features
+
+  // Feature 7: Performance Profiler & Optimizer
+  performanceProfiler?: {
+    enabled: boolean;
+    profileTypes: Array<'cpu' | 'memory' | 'runtime' | 'network' | 'database'>;
+    samplingInterval: number;
+    reportPath: string;
+    optimization: {
+      enabled: boolean;
+      level: 'aggressive' | 'moderate' | 'conservative';
+      autoApply: boolean;
+    };
+    benchmarking: {
+      enabled: boolean;
+      iterations: number;
+      warmupRuns: number;
+    };
+    monitoring: {
+      realTime: boolean;
+      alertThresholds: {
+        cpu: number;
+        memory: number;
+        responseTime: number;
+      };
+    };
+  };
+
+  // Feature 9: Multi-Language Code Translation
+  codeTranslator?: {
+    enabled: boolean;
+    quality: 'fast' | 'balanced' | 'accurate';
+    preserveComments: boolean;
+    preserveStyles: boolean;
+    validation: {
+      enabled: boolean;
+      compileCheck: boolean;
+    };
+    optimization: {
+      idiomaticCode: boolean;
+      modernSyntax: boolean;
+    };
+  };
+
+  // Feature 11: API Client Generator & Testing Suite
+  apiGenerator?: {
+    enabled: boolean;
+    defaultLanguage: 'typescript' | 'javascript' | 'python' | 'java' | 'go' | 'rust';
+    generateTests: boolean;
+    generateDocs: boolean;
+    authentication: {
+      type: 'none' | 'basic' | 'bearer' | 'api-key' | 'oauth2';
+      location?: 'header' | 'query' | 'cookie';
+      name?: string;
+    };
+    client: {
+      includeTypes: boolean;
+      includeValidation: boolean;
+      includeRetry: boolean;
+      timeout: number;
+    };
+    testing: {
+      framework: string;
+      includeMocks: boolean;
+      coverageTarget: number;
+    };
+  };
 }
 
 export interface Session {

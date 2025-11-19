@@ -208,3 +208,50 @@ export type {
   CodePattern as KBCodePattern,
   CodebaseInsight,
 } from './knowledge-base/types.js';
+
+// Phase 3 Features
+
+// Feature 7: Performance Profiler & Optimizer
+export { PerformanceProfilerManager } from './performance-profiler/performance-profiler.js';
+export { CPUProfiler } from './performance-profiler/cpu-profiler.js';
+export { MemoryProfiler } from './performance-profiler/memory-profiler.js';
+export { PerformanceOptimizer } from './performance-profiler/optimizer.js';
+export { Benchmarker } from './performance-profiler/benchmarker.js';
+export type {
+  PerformanceProfilerConfig,
+  ProfileSession,
+  PerformanceMetrics,
+  PerformanceReport,
+  OptimizationSuggestion,
+  BenchmarkResult,
+  Hotspot,
+  MemoryLeak,
+} from './performance-profiler/types.js';
+
+// Feature 9: Multi-Language Code Translation
+export { TranslationManager } from './code-translator/translation-manager.js';
+export { CodeTranslator } from './code-translator/translator.js';
+export { CodeParser } from './code-translator/code-parser.js';
+export type {
+  CodeTranslatorConfig,
+  TranslationRequest,
+  TranslationResult,
+  SupportedLanguage,
+  TranslationWarning,
+  CodeStructure,
+} from './code-translator/types.js';
+
+// Feature 11: API Client Generator & Testing Suite
+export { APIGeneratorManager } from './api-generator/api-generator-manager.js';
+export { APIClientGenerator } from './api-generator/client-generator.js';
+export { APITestGenerator } from './api-generator/test-generator.js';
+export { APISpecParser } from './api-generator/spec-parser.js';
+export type {
+  APIGeneratorConfig,
+  APISpecification,
+  GeneratedClient,
+  TestSuite,
+  TestCase,
+  ClientLanguage,
+  HTTPMethod,
+} from './api-generator/types.js';
