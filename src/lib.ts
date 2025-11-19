@@ -255,3 +255,71 @@ export type {
   ClientLanguage,
   HTTPMethod,
 } from './api-generator/types.js';
+
+// Phase 4 Features
+
+// Feature 8: Test Generation & Coverage Analysis
+export { TaurusTestGeneratorManager } from './test-generator/test-generator-manager.js';
+export { TestAnalyzer as TaurusTestAnalyzer } from './test-generator/test-analyzer.js';
+export { TestCaseGenerator } from './test-generator/test-case-generator.js';
+export { CoverageAnalyzer } from './test-generator/coverage-analyzer.js';
+export type {
+  TestGeneratorConfig,
+  TestGeneratorManager,
+  TestFramework,
+  TestType,
+  TestGenerationRequest,
+  TestGenerationResult,
+  GeneratedTestCase,
+  CodeElement as TestCodeElement,
+  CoverageAnalysisRequest,
+  CoverageAnalysisResult,
+  CoverageMetrics,
+  CoverageGap,
+  CoverageSuggestion,
+  TestQualityAnalysis,
+} from './test-generator/types.js';
+
+// Feature 10: Security Vulnerability Scanner
+export { TaurusSecurityScannerManager } from './security-scanner/security-scanner-manager.js';
+export { VulnerabilityDetector } from './security-scanner/vulnerability-detector.js';
+export { DependencyScanner as SecurityDependencyScanner } from './security-scanner/dependency-scanner.js';
+export { SecretDetector } from './security-scanner/secret-detector.js';
+export type {
+  SecurityScannerConfig,
+  SecurityScannerManager,
+  SecurityScanRequest,
+  SecurityScanResult,
+  Vulnerability as SecurityScanVulnerability,
+  VulnerabilityType,
+  VulnerabilitySeverity,
+  DependencyVulnerability,
+  SecretFinding,
+  SecurityRecommendation,
+  SecurityReport,
+  SecurityAuditResult,
+  OWASPCategory,
+} from './security-scanner/types.js';
+
+// Feature 12: Database Schema Manager & Migration Tool
+export { TaurusDatabaseManager } from './database-manager/database-manager.js';
+export { SchemaGenerator } from './database-manager/schema-generator.js';
+export { MigrationGenerator } from './database-manager/migration-generator.js';
+export { SchemaComparator } from './database-manager/schema-comparator.js';
+export type {
+  DatabaseManagerConfig,
+  DatabaseManager,
+  DatabaseType,
+  DatabaseSchema,
+  Table,
+  Column,
+  Migration,
+  SchemaGenerationRequest,
+  SchemaGenerationResult,
+  MigrationGenerationRequest,
+  MigrationGenerationResult,
+  SchemaComparisonRequest,
+  SchemaComparisonResult,
+  SchemaDiff,
+  MigrationExecutionResult,
+} from './database-manager/types.js';
