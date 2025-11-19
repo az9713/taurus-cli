@@ -127,6 +127,59 @@ export interface Config {
       enabled: boolean;
     }>;
   };
+
+  // Phase 1 Features
+
+  // Feature 6: AI Code Review Bot
+  codeReview?: {
+    enabled: boolean;
+    autoReview: boolean;
+    reviewOn: Array<'pull_request' | 'commit' | 'save'>;
+    checks: Array<'style' | 'security' | 'performance' | 'testing' | 'documentation' | 'best-practices'>;
+    severity: {
+      blockOnCritical: boolean;
+      blockOnHigh: boolean;
+      warnOnMedium: boolean;
+    };
+    excludePatterns?: string[];
+    includePatterns?: string[];
+  };
+
+  // Feature 8: Intelligent Dependency Manager
+  dependencyManager?: {
+    enabled: boolean;
+    packageManager: 'npm' | 'yarn' | 'pnpm';
+    autoUpdate: {
+      security: 'immediately' | 'daily' | 'weekly' | 'monthly' | 'manual';
+      patch: 'immediately' | 'daily' | 'weekly' | 'monthly' | 'manual';
+      minor: 'immediately' | 'daily' | 'weekly' | 'monthly' | 'manual';
+      major: 'immediately' | 'daily' | 'weekly' | 'monthly' | 'manual';
+    };
+    policies: {
+      allowedLicenses: string[];
+      blockedLicenses: string[];
+      blockedPackages: string[];
+    };
+    optimization: {
+      bundleSizeLimit?: number;
+      suggestAlternatives: boolean;
+      detectUnused: boolean;
+    };
+  };
+
+  // Feature 15: Automated Documentation Writer
+  documentation?: {
+    enabled: boolean;
+    output: string;
+    formats: Array<'markdown' | 'html' | 'pdf' | 'json'>;
+    features: {
+      apiReference: boolean;
+      tutorials: boolean;
+      examples: boolean;
+      diagrams: boolean;
+      changelog: boolean;
+    };
+  };
 }
 
 export interface Session {

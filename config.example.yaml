@@ -290,3 +290,184 @@ mcpServers:
 # export GITHUB_TOKEN=ghp_...
 # export SLACK_TOKEN=xoxb-...
 # export CONFLUENCE_API_TOKEN=...
+
+# ============================================================================
+# PHASE 1 FEATURES
+# ============================================================================
+
+# ============================================================================
+# FEATURE 6: AI Code Review Bot
+# ============================================================================
+# Automated code review with security, style, and performance analysis
+
+codeReview:
+  enabled: false
+  autoReview: true
+  reviewOn:
+    - pull_request
+    - commit
+
+  checks:
+    - style
+    - security
+    - performance
+    - testing
+    - documentation
+
+  severity:
+    blockOnCritical: true
+    blockOnHigh: false
+    warnOnMedium: true
+
+  # Patterns to exclude from review
+  excludePatterns:
+    - "node_modules/.*"
+    - "dist/.*"
+    - "build/.*"
+    - ".*\\.test\\.ts"
+
+  # Only review these patterns (optional)
+  # includePatterns:
+  #   - "src/.*\\.ts"
+
+# Usage Examples:
+# 
+# Review single file:
+#   taurus> /review src/api/users.ts
+# 
+# Review PR:
+#   taurus> /review pr 123
+#
+# Auto-fix issues:
+#   taurus> /review fix src/api/users.ts
+
+# ============================================================================
+# FEATURE 8: Intelligent Dependency Manager
+# ============================================================================
+# Smart dependency management with auto-updates and security scanning
+
+dependencyManager:
+  enabled: false
+  packageManager: npm  # npm, yarn, or pnpm
+
+  autoUpdate:
+    security: immediately    # Fix security issues right away
+    patch: weekly           # Patch updates weekly
+    minor: monthly          # Minor updates monthly
+    major: manual           # Major updates require manual approval
+
+  policies:
+    allowedLicenses:
+      - MIT
+      - Apache-2.0
+      - BSD-2-Clause
+      - BSD-3-Clause
+      - ISC
+
+    blockedLicenses:
+      - GPL-2.0
+      - GPL-3.0
+      # Add licenses that conflict with your project
+
+    blockedPackages:
+      - colors  # Example: compromised package
+      # Add packages you want to block
+
+  optimization:
+    bundleSizeLimit: 500  # KB
+    suggestAlternatives: true
+    detectUnused: true
+
+# Usage Examples:
+#
+# Check for updates:
+#   taurus> /deps check
+#
+# Update with analysis:
+#   taurus> /deps update react
+#   → Analyzes impact before updating
+#
+# Security audit:
+#   taurus> /deps security
+#   → Scans for vulnerabilities
+#
+# Fix security issues:
+#   taurus> /deps fix-security
+#
+# Find unused dependencies:
+#   taurus> /deps unused
+#
+# License compliance:
+#   taurus> /deps licenses
+
+# ============================================================================
+# FEATURE 15: Automated Documentation Writer
+# ============================================================================
+# Auto-generate comprehensive documentation from code
+
+documentation:
+  enabled: false
+  output: ./docs
+  formats:
+    - markdown
+    # - html
+    # - pdf
+
+  features:
+    apiReference: true      # Generate API docs from code
+    tutorials: true         # Auto-generate tutorials
+    examples: true          # Extract code examples
+    diagrams: true          # Generate architecture diagrams
+    changelog: true         # Generate changelog from git
+
+  # Exclude patterns (optional)
+  # exclude:
+  #   - "**/*.test.ts"
+  #   - "**/internal/**"
+
+# Usage Examples:
+#
+# Generate all docs:
+#   taurus> /docs generate
+#
+# Generate API reference only:
+#   taurus> /docs api-reference
+#
+# Create tutorial:
+#   taurus> /docs tutorial "Getting Started"
+#   → Auto-generates tutorial from code
+#
+# Update changelog:
+#   taurus> /docs changelog
+#   → Generates from git commits
+#
+# Validate docs:
+#   taurus> /docs validate
+#   → Checks for broken links, outdated examples
+
+# ============================================================================
+# COMBINED WORKFLOW EXAMPLES
+# ============================================================================
+
+# Example 1: Pre-commit workflow
+# → Code review runs automatically
+# → Blocks commit if critical issues found
+# → Suggests fixes
+
+# Example 2: Dependency maintenance
+# → Security vulnerabilities detected
+# → Auto-creates PR with fixes
+# → Notifies team on Slack
+
+# Example 3: Documentation pipeline
+# → Code changes detected
+# → API docs regenerated
+# → Tutorials updated
+# → Pushed to docs site
+
+# Example 4: Complete quality check
+# taurus> /quality-check
+# → Runs code review
+# → Checks dependencies
+# → Updates documentation
+# → Generates report

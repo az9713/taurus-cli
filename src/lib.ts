@@ -104,3 +104,53 @@ export { logger } from './utils/logger.js';
 
 // Default configurations
 export { DEFAULT_CONFIG, SYSTEM_PROMPT } from './config/default.js';
+
+// Phase 1 Features
+
+// Feature 6: AI Code Review Bot
+export { CodeReviewer } from './code-review/reviewer.js';
+export { StyleAnalyzer } from './code-review/analyzers/style-analyzer.js';
+export { SecurityAnalyzer } from './code-review/analyzers/security-analyzer.js';
+export { PerformanceAnalyzer } from './code-review/analyzers/performance-analyzer.js';
+export { TestAnalyzer } from './code-review/analyzers/test-analyzer.js';
+export type {
+  CodeReviewConfig,
+  ReviewFinding,
+  ReviewResult,
+  ReviewSeverity,
+  ReviewCategory,
+  PRReviewRequest,
+  SecurityVulnerability,
+  PerformanceIssue,
+} from './code-review/types.js';
+
+// Feature 8: Intelligent Dependency Manager
+export { DependencyManager } from './dependency-manager/manager.js';
+export { DependencyScanner } from './dependency-manager/scanner.js';
+export { SecurityChecker } from './dependency-manager/security-checker.js';
+export { UpdateAnalyzer } from './dependency-manager/update-analyzer.js';
+export { LicenseChecker } from './dependency-manager/license-checker.js';
+export type {
+  DependencyManagerConfig,
+  DependencyInfo,
+  UpdateReport,
+  UpdateAnalysis,
+  Vulnerability,
+  LicenseType,
+  UnusedDependency,
+} from './dependency-manager/types.js';
+
+// Feature 15: Automated Documentation Writer
+export { DocumentationManager } from './documentation/doc-manager.js';
+export { CodeExtractor } from './documentation/extractors/code-extractor.js';
+export { MarkdownGenerator } from './documentation/generators/markdown-generator.js';
+export type {
+  DocumentationConfig,
+  FunctionDoc,
+  ClassDoc,
+  InterfaceDoc,
+  Tutorial,
+  CodeExample,
+  APIEndpoint,
+  Diagram,
+} from './documentation/types.js';
