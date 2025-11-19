@@ -24,6 +24,11 @@ Comprehensive tutorials for mastering Taurus CLI - a complete Claude Code clone 
 11. **[Documentation Workflow](./11-documentation-workflow.md)** - Generate and maintain docs
 12. **[Bug Fixing Workflow](./12-bug-fixing-workflow.md)** - Systematic debugging
 
+### Phase 4: Advanced Development Tools
+13. **[Test Generation & Coverage Workflow](./13-test-generation-workflow.md)** - AI-powered test generation and coverage analysis
+14. **[Security Scanning Workflow](./14-security-scanning-workflow.md)** - Comprehensive vulnerability detection
+15. **[Database Migration Workflow](./15-database-migration-workflow.md)** - Safe schema management and migrations
+
 ## 🎯 Learning Path
 
 ### Beginner (Start Here)
@@ -40,6 +45,11 @@ Comprehensive tutorials for mastering Taurus CLI - a complete Claude Code clone 
 7. MCP Integration Tutorial
 8. Subagents Tutorial
 9. Real-World Workflows (all)
+
+### Expert (Phase 4)
+10. Test Generation & Coverage Workflow
+11. Security Scanning Workflow
+12. Database Migration Workflow
 
 ## 🛠️ Prerequisites
 
@@ -69,11 +79,18 @@ Each tutorial includes:
 
 **Working on a team project?** See [Code Review Workflow](./09-code-review-workflow.md)
 
+**Need to test your code?** See [Test Generation Workflow](./13-test-generation-workflow.md)
+
+**Concerned about security?** See [Security Scanning Workflow](./14-security-scanning-workflow.md)
+
+**Managing databases?** See [Database Migration Workflow](./15-database-migration-workflow.md)
+
 ## 📖 Additional Resources
 
 - [Main README](../README.md) - Project overview
 - [Architecture Documentation](../ARCHITECTURE.md) - Technical design
 - [MCP Documentation](../MCP.md) - MCP integration details
+- [Phase 4 Features Guide](../PHASE4_FEATURES.md) - Comprehensive Phase 4 documentation
 - [Contributing Guide](../CONTRIBUTING.md) - Development guide
 
 ## 🤝 Getting Help
