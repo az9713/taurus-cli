@@ -315,6 +315,101 @@ export interface Config {
       coverageTarget: number;
     };
   };
+
+  // Phase 4 Features
+
+  // Feature 8: Test Generation & Coverage Analysis
+  testGenerator?: {
+    enabled: boolean;
+    framework: 'jest' | 'mocha' | 'vitest' | 'pytest' | 'unittest' | 'junit' | 'testng' | 'go-test' | 'rust-test' | 'rspec';
+    testTypes: Array<'unit' | 'integration' | 'e2e' | 'functional' | 'performance' | 'security' | 'snapshot'>;
+    coverage: {
+      enabled: boolean;
+      threshold: {
+        statements: number;
+        branches: number;
+        functions: number;
+        lines: number;
+      };
+      reportFormats: Array<'text' | 'html' | 'json' | 'lcov' | 'cobertura' | 'clover'>;
+      includeUntested: boolean;
+      trackBranches: boolean;
+    };
+    generation: {
+      generateMocks: boolean;
+      generateFixtures: boolean;
+      generateHelpers: boolean;
+      edgeCases: boolean;
+      errorCases: boolean;
+      asyncTests: boolean;
+    };
+    quality: {
+      minAssertions: number;
+      requireDescriptions: boolean;
+      isolateTests: boolean;
+      deterministicTests: boolean;
+    };
+  };
+
+  // Feature 10: Security Vulnerability Scanner
+  securityScanner?: {
+    enabled: boolean;
+    scanTypes: Array<'static-analysis' | 'dependency-scan' | 'secret-detection' | 'configuration-audit' | 'best-practices'>;
+    severity: {
+      minimum: 'critical' | 'high' | 'medium' | 'low' | 'info';
+      failOnSeverity: Array<'critical' | 'high' | 'medium' | 'low'>;
+    };
+    staticAnalysis: {
+      enabled: boolean;
+      rules: Array<string>;
+      customRules?: string[];
+      excludePatterns?: string[];
+    };
+    dependencyScanning: {
+      enabled: boolean;
+      sources: Array<'npm-audit' | 'snyk' | 'osv' | 'github-advisory'>;
+      autoUpdate: boolean;
+      excludePackages?: string[];
+    };
+    secretDetection: {
+      enabled: boolean;
+      patterns: Array<string>;
+      excludeFiles?: string[];
+    };
+    reporting: {
+      formats: Array<'json' | 'html' | 'markdown' | 'sarif' | 'csv'>;
+      outputDir: string;
+      includeRemediation: boolean;
+      groupBy: 'severity' | 'type' | 'file';
+    };
+  };
+
+  // Feature 12: Database Schema Manager & Migration Tool
+  databaseManager?: {
+    enabled: boolean;
+    database: 'postgresql' | 'mysql' | 'sqlite' | 'mongodb' | 'mariadb' | 'mssql' | 'oracle';
+    schemaLanguage: 'sql' | 'typescript' | 'prisma' | 'sequelize' | 'typeorm' | 'mongoose';
+    migrations: {
+      directory: string;
+      tableName: string;
+      generateTimestamp: boolean;
+      transactional: boolean;
+      lockTable: boolean;
+    };
+    schema: {
+      directory: string;
+      includeViews: boolean;
+      includeIndexes: boolean;
+      includeTriggers: boolean;
+      namingConvention: 'snake_case' | 'camelCase' | 'PascalCase';
+    };
+    sync: {
+      enabled: boolean;
+      safe: boolean;
+      dropUnused: boolean;
+      backupBeforeSync: boolean;
+    };
+  };
 }
 
 export interface Session {
