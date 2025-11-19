@@ -154,3 +154,57 @@ export type {
   APIEndpoint,
   Diagram,
 } from './documentation/types.js';
+
+// Phase 2 Features
+
+// Feature 2: Smart Code Generation from Specs
+export { GenerationManager } from './code-generation/generation-manager.js';
+export { SpecParser } from './code-generation/spec-parser.js';
+export { CodeGenerator } from './code-generation/code-generator.js';
+export { TestGenerator } from './code-generation/test-generator.js';
+export { CodeValidator } from './code-generation/code-validator.js';
+export { TemplateManager } from './code-generation/template-manager.js';
+export type {
+  CodeGenerationConfig,
+  GenerationSpec,
+  GeneratedCode,
+  GenerationResult,
+  TargetLanguage,
+  CodePattern,
+  Template,
+  ValidationResult,
+} from './code-generation/types.js';
+
+// Feature 4: Local Development Environment Orchestrator
+export { EnvironmentOrchestrator } from './dev-environment/environment-orchestrator.js';
+export { ServiceManager } from './dev-environment/service-manager.js';
+export { DatabaseConfigurator } from './dev-environment/database-configurator.js';
+export { TemplateRepository } from './dev-environment/template-repository.js';
+export type {
+  DevEnvironmentConfig,
+  ServiceConfig,
+  Environment,
+  Service,
+  OrchestrationResult,
+  DatabaseEngine,
+  DatabaseConnection,
+  ServiceTemplate,
+} from './dev-environment/types.js';
+
+// Feature 5: AI Knowledge Base from Codebase
+export { KnowledgeBaseManager } from './knowledge-base/knowledge-base-manager.js';
+export { CodeIndexer } from './knowledge-base/code-indexer.js';
+export { SemanticSearch } from './knowledge-base/semantic-search.js';
+export { QAEngine } from './knowledge-base/qa-engine.js';
+export type {
+  KnowledgeBaseConfig,
+  CodebaseIndex,
+  CodeElement,
+  SearchQuery,
+  SearchResult,
+  Question,
+  Answer,
+  KnowledgeGraph,
+  CodePattern as KBCodePattern,
+  CodebaseInsight,
+} from './knowledge-base/types.js';

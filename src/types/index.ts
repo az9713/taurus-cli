@@ -180,6 +180,73 @@ export interface Config {
       changelog: boolean;
     };
   };
+
+  // Phase 2 Features
+
+  // Feature 2: Smart Code Generation from Specs
+  codeGeneration?: {
+    enabled: boolean;
+    defaultLanguage: 'typescript' | 'javascript' | 'python' | 'java' | 'go' | 'rust';
+    quality: 'fast' | 'balanced' | 'thorough';
+    templates: {
+      enabled: boolean;
+      customTemplatesPath?: string;
+    };
+    validation: {
+      syntaxCheck: boolean;
+      linting: boolean;
+      typeChecking: boolean;
+    };
+    testing: {
+      generateTests: boolean;
+      testFramework: string;
+      coverageTarget: number;
+    };
+    documentation: {
+      generateDocs: boolean;
+      docStyle: 'jsdoc' | 'sphinx' | 'javadoc' | 'godoc' | 'inline';
+    };
+  };
+
+  // Feature 4: Local Development Environment Orchestrator
+  devEnvironment?: {
+    enabled: boolean;
+    projectName: string;
+    services: Array<{
+      name: string;
+      type: 'database' | 'cache' | 'message-queue' | 'search' | 'storage' | 'api' | 'web' | 'worker' | 'custom';
+      image?: string;
+      ports?: Array<{ host: number; container: number }>;
+      environment?: Record<string, string>;
+      volumes?: string[];
+      depends_on?: string[];
+    }>;
+    autoStart: boolean;
+    healthCheck: {
+      enabled: boolean;
+      interval: number;
+      timeout: number;
+      retries: number;
+    };
+  };
+
+  // Feature 5: AI Knowledge Base from Codebase
+  knowledgeBase?: {
+    enabled: boolean;
+    indexPath: string;
+    embeddingProvider: 'anthropic' | 'openai' | 'local';
+    chunkSize: number;
+    chunkOverlap: number;
+    maxResults: number;
+    similarityThreshold: number;
+    indexing: {
+      includePatterns: string[];
+      excludePatterns: string[];
+      languages: string[];
+      parseComments: boolean;
+      parseDocstrings: boolean;
+    };
+  };
 }
 
 export interface Session {
